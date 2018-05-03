@@ -15,12 +15,6 @@ namespace WordCountWebService.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Input/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST: api/Input
         public void Post([FromBody]string value)
         {
