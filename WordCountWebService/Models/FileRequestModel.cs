@@ -1,9 +1,19 @@
-﻿using System;
+﻿/*
+ * Model class for the InputController
+ * 
+ * This class contains the functions to parse the input string to calculate the word, character, whitespace, and punctuation counts, and returns the formatted JSON response.
+ * 
+ * Author: Michael Yowell - michael.yowell@gmail.com
+ * 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json.Linq;
 
 namespace WordCountWebService.Models {
     public class FileRequestModel {
@@ -13,13 +23,14 @@ namespace WordCountWebService.Models {
         private int whitespaceCount { get; set; } /* The total whitespace count of the request string */
         private int punctuationCount { get; set; } /* The total punctuation count of the requrst string */
         private SortedDictionary<String, int> dict { get; set; } /* An ordered dictionary of a word and the amount it has appeared in the input string */
-        private string fileCountJSONReturn { get; set; } /* A response string serialized into JSON format */
 
         /* 
          * Default constructor for the FileRequestModel class. 
         */
         public FileRequestModel(string inputString) {
             this.inputString = inputString;
+
+            parseRequestString(inputString);
         }
 
         /*
@@ -49,6 +60,25 @@ namespace WordCountWebService.Models {
 
             if(dict.Count > 50)
                 this.dict = new SortedDictionary<String, int>((from entry in dict orderby entry.Value descending select entry).Take(50).ToDictionary(pair => pair.Key, pair => pair.Value));
+        }
+
+        public JObject getFileCountJSONResponse() {
+            dynamic fileCountJSONReturn = new JObject();
+            fileCountJSONReturn.Frequencies = new JArray() as dynamic;
+
+            foreach(KeyValuePair<String, int> entry in this.dict) {
+                dynamic word = new JObject();
+                word.Word = entry.Key;
+                word.Count = entry.Value;
+                fileCountJSONReturn.Frequencies.add(word);
+            }
+
+            fileCountJSONReturn.WordCount = this.wordCount;
+            fileCountJSONReturn.WhitespacePercentage = (double)this.characterCount / this.whitespaceCount;
+            fileCountJSONReturn.PunctuationPercentage = (double)this.characterCount / this.punctuationCount;
+
+
+            return fileCountJSONReturn;
         }
     }
 }
