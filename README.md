@@ -19,6 +19,12 @@ Postman (Google Chrome): https://chrome.google.com/webstore/detail/postman/fhbjg
 RESTClient (Firefox): https://addons.mozilla.org/en-US/firefox/addon/restclient/  
 The curl command (command line): http://www.codingpedia.org/ama/how-to-test-a-rest-api-from-command-line-with-curl/  
 
+Send your request to the following URL:
+
+http://localhost:{port}/api/Input
+
+The port number may vary and can be retreived from webpage that launches when the service is first started.
+
 For the best compapability across tesitng tools ensure that your request header contains the attribute "Content-Type" with the value "text/plain; charset=utf-8".
 
 Only POST type requests are supported, attempting any other type of request will result in an error.
