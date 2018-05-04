@@ -5,7 +5,8 @@
 Requires the latets visual studio (https://www.visualstudio.com/downloads/) and .NET framework.
 
 To Run the service on your local machine, simply pull the project into your workspace and launch with your browser of choice using the IIS Express button as seen below:
-![alt text](https://imgur.com/a/GuYBAtB "Visual Studio Launch Button")
+
+![img](https://i.imgur.com/i8M8m6R.png)
 
 If you receive a HTTP Error 403.14 - Forbidden error when launching the service this may indicate an issue with your version of IIS, see the following link for a possible resolution. Regardless the service will still be able to accept requests and respond correctly.
 
