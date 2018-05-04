@@ -1,4 +1,4 @@
-### Word-Count-Web-Service
+# Word-Count-Web-Service
 ## A RESTful web service which accepts an HTTP POST request of raw/plain text data, calculates the word frequencies, whitespace percentage, and punctuation percentage. Returns a JSON string containing the result of the analysis.
 
 ### Getting Started
