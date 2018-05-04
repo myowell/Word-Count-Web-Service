@@ -47,7 +47,7 @@ namespace WordCountWebService.Models {
 
             inputString = inputString.Trim(); // Remove excess whitespace in order to split the string correctly
 
-            string[] words = Regex.Split(inputString, @"\s");
+            string[] words = Regex.Split(inputString, @"\s+");
             this.wordCount = words.Length;
 
             for(int i = 0; i < words.Length; i++) {
