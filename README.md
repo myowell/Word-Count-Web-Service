@@ -15,9 +15,9 @@ https://support.microsoft.com/en-us/help/942062/http-error-403-14-forbidden-erro
 ### Use
 To send a request to the service while it is running on your local machine you may use one of the following popular browser extensions or methods:
 
-Postman (Google Chrome): https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en
-RESTClient (Firefox): https://addons.mozilla.org/en-US/firefox/addon/restclient/
-The curl command (command line): http://www.codingpedia.org/ama/how-to-test-a-rest-api-from-command-line-with-curl/
+Postman (Google Chrome): https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en  
+RESTClient (Firefox): https://addons.mozilla.org/en-US/firefox/addon/restclient/  
+The curl command (command line): http://www.codingpedia.org/ama/how-to-test-a-rest-api-from-command-line-with-curl/  
 
 For the best compapability across tesitng tools ensure that your request header contains the attribute "Content-Type" with the value "text/plain; charset=utf-8".
 
