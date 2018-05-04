@@ -39,14 +39,15 @@ namespace WordCountWebService.Models {
          */
 
        private void parseRequestString(string inputString) {
-
             this.whitespaceCount = inputString.Count(char.IsWhiteSpace);
             this.punctuationCount = inputString.Count(char.IsPunctuation);
             this.characterCount = inputString.Length - Regex.Matches(inputString, @"\t|\n|\r").Count;
             inputString = Regex.Replace(inputString, @"\t|\n|\r", ""); // Remove newline characters
             inputString = Regex.Replace(inputString, @"\p{P}", " "); // Remove punctuation
 
-            string[] words = Regex.Split(inputString, @"\s+");
+            inputString = inputString.Trim(); // Remove excess whitespace in order to split the string correctly
+
+            string[] words = Regex.Split(inputString, @"\s");
             this.wordCount = words.Length;
 
             for(int i = 0; i < words.Length; i++) {
@@ -60,14 +61,18 @@ namespace WordCountWebService.Models {
             // Sort the words and word count dictionary in descending order
             
             this.dict = this.dict.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
-            this.dict = this.dict.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-            
+            this.dict = this.dict.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);           
 
             // Extracts the top 50 results if there were more than 50 unique words in the input string
 
             if (dict.Count > 50)
                 this.dict = this.dict.Take(50).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
+
+        /*
+         * Creates the JSON response using the word frequency dictionary as well as the word, whitespace, character, and punctuation counts.
+         * Returns - The formatted JSONObject containing all the information parsed from the request. 
+        */
 
         public dynamic getFileCountJSONResponse() {
             dynamic fileCountJSONReturn = new JObject();
@@ -81,9 +86,8 @@ namespace WordCountWebService.Models {
             }
 
             fileCountJSONReturn.WordCount = this.wordCount;
-            fileCountJSONReturn.WhitespacePercentage = (double)this.characterCount / this.whitespaceCount;
-            fileCountJSONReturn.PunctuationPercentage = (double)this.characterCount / this.punctuationCount;
-
+            fileCountJSONReturn.WhitespacePercentage = whitespaceCount == 0 ? 0 : (double)100 / (this.characterCount / this.whitespaceCount);
+            fileCountJSONReturn.PunctuationPercentage = punctuationCount == 0 ? 0 : ((double)100 / (this.characterCount / this.punctuationCount));
 
             return fileCountJSONReturn;
         }

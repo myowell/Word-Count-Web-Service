@@ -21,6 +21,7 @@ namespace WordCountWebService
                 defaults: new { id = RouteParameter.Optional }
             );
 
+
             GlobalConfiguration.Configuration.Formatters.Insert(0, new TextMediaTypeFormatter());
         }
     }
