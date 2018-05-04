@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using WordCountWebService.App_Start;
 
 namespace WordCountWebService
 {
@@ -19,6 +20,8 @@ namespace WordCountWebService
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            GlobalConfiguration.Configuration.Formatters.Insert(0, new TextMediaTypeFormatter());
         }
     }
 }

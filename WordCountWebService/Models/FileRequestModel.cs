@@ -22,7 +22,7 @@ namespace WordCountWebService.Models {
         private int characterCount { get; set; } /* The total character count of the request string */
         private int whitespaceCount { get; set; } /* The total whitespace count of the request string */
         private int punctuationCount { get; set; } /* The total punctuation count of the requrst string */
-        private SortedDictionary<String, int> dict { get; set; } /* An ordered dictionary of a word and the amount it has appeared in the input string */
+        private SortedDictionary<String, int> dict = new SortedDictionary<string, int>(); /* An ordered dictionary of a word and the amount it has appeared in the input string */
 
         /* 
          * Default constructor for the FileRequestModel class. 
@@ -43,14 +43,14 @@ namespace WordCountWebService.Models {
             this.punctuationCount = inputString.Count(char.IsPunctuation);
             this.characterCount = inputString.Length - Regex.Matches(inputString, @"\t|\n|\r").Count;
             inputString = Regex.Replace(inputString, @"\t|\n|\r", " "); // Remove newline characters and replace with spaces
-            inputString = Regex.Replace(inputString, @"\p{P}", ""); // Remove punctuation
+            inputString = Regex.Replace(inputString, @"\p{P}", " "); // Remove punctuation
 
             string[] words = inputString.Split(' ');
             this.wordCount = words.Length;
 
             for(int i = 0; i < words.Length; i++) {
                 string word = words[i].ToLower();
-                if (this.dict.ContainsKey(word))
+                if (!this.dict.ContainsKey(word))
                     this.dict.Add(word, 1);
                 else
                     this.dict[word] += 1;
@@ -62,7 +62,7 @@ namespace WordCountWebService.Models {
                 this.dict = new SortedDictionary<String, int>((from entry in dict orderby entry.Value descending select entry).Take(50).ToDictionary(pair => pair.Key, pair => pair.Value));
         }
 
-        public JObject getFileCountJSONResponse() {
+        public dynamic getFileCountJSONResponse() {
             dynamic fileCountJSONReturn = new JObject();
             fileCountJSONReturn.Frequencies = new JArray() as dynamic;
 
@@ -70,7 +70,7 @@ namespace WordCountWebService.Models {
                 dynamic word = new JObject();
                 word.Word = entry.Key;
                 word.Count = entry.Value;
-                fileCountJSONReturn.Frequencies.add(word);
+                fileCountJSONReturn.Frequencies.Add(word);
             }
 
             fileCountJSONReturn.WordCount = this.wordCount;

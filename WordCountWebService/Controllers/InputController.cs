@@ -4,12 +4,17 @@
  * Author: Michael Yowell - michael.yowell@gmail.com
  */
 
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web.Http;
+using WordCountWebService.Models;
 
 namespace WordCountWebService.Controllers
 {
@@ -22,8 +27,18 @@ namespace WordCountWebService.Controllers
         }
 
         // POST: api/Input
-        public void Post([FromBody]string value)
+        public JObject Post([FromBody]String request)
         {
+            if (request.Length == 0 || request == null){
+                dynamic errorResponse = new JObject();
+                errorResponse.Add("Error", "Please send a non-empty non-null string.");
+                return errorResponse;
+
+            }
+
+            FileRequestModel response = new FileRequestModel(request);
+
+            return response.getFileCountJSONResponse();
         }
 
         // PUT: api/Input/5
