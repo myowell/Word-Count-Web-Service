@@ -1,4 +1,10 @@
-﻿using System;
+﻿/* Main controller for the file compression analyzer web service.
+ * 
+ * This controller will accept an HTTP POST request with a body containing a raw string, parses the results, and return a JSON string containing the top 50 most frequntly encountered words, word count, white space frequency, and punctuation frequency.
+ * Author: Michael Yowell - michael.yowell@gmail.com
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
