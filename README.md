@@ -1,7 +1,7 @@
-#H1 Word-Count-Web-Service
-#H3 A RESTful web service which accepts an HTTP POST request of raw/plain text data, calculates the word frequencies, whitespace percentage, and punctuation percentage. Returns a JSON string containing the result of the analysis.
+### Word-Count-Web-Service
+## A RESTful web service which accepts an HTTP POST request of raw/plain text data, calculates the word frequencies, whitespace percentage, and punctuation percentage. Returns a JSON string containing the result of the analysis.
 
-#H3 Getting Started
+### Getting Started
 Requires the latets visual studio (https://www.visualstudio.com/downloads/) and .NET framework.
 
 To Run the service on your local machine, simply pull the project into your workspace and launch with your browser of choice using the IIS Express button as seen below:
@@ -12,7 +12,7 @@ If you receive a HTTP Error 403.14 - Forbidden error when launching the service 
 
 https://support.microsoft.com/en-us/help/942062/http-error-403-14-forbidden-error-when-you-open-an-iis-7-0-webpage
 
-#H3 Use
+### Use
 To send a request to the service while it is running on your local machine you may use one of the following popular browser extensions or methods:
 
 Postman (Google Chrome): https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en
