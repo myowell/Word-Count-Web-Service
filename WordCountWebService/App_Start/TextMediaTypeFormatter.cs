@@ -1,4 +1,6 @@
-﻿using System;
+﻿/* Supports UTF-8 encoded plain/text application types */
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
