@@ -50,7 +50,10 @@ Will return the following JSON string:
     "Count": 5
   }, {
     "Word": "eight",
-    "Count": 2
+    "Count": 3
+  }, {
+    "Word": "three",
+    "Count": 3
   }, {
     "Word": "one",
     "Count": 2
@@ -58,22 +61,15 @@ Will return the following JSON string:
     "Word": "six",
     "Count": 2
   }, {
-    "Word": "eightthree",
-    "Count": 1
-  }, {
     "Word": "nine",
-    "Count": 1
-  }, {
-    "Word": "threethree",
     "Count": 1
   }, {
     "Word": "two",
     "Count": 1
   }],
-  "WordCount": 15,
+  "WordCount": 17,
   "WhitespacePercentage": 20.0,
   "PunctuationPercentage": 4.7619047619047619
-}
 ```
 
 Note that while a request containing nothing but punctuation will be accepted, this service's logic cannot always parse such a request correctly. Thus it is considered undefined behavior and will lead to unexpected results.
