@@ -22,7 +22,7 @@ namespace WordCountWebService.Models {
         private int characterCount { get; set; } /* The total character count of the request string */
         private int whitespaceCount { get; set; } /* The total whitespace count of the request string */
         private int punctuationCount { get; set; } /* The total punctuation count of the requrst string */
-        private SortedDictionary<String, int> dict = new SortedDictionary<string, int>(); /* An ordered dictionary of a word and the amount it has appeared in the input string */
+        private Dictionary<String, int> dict = new Dictionary<string, int>(); /* An ordered dictionary of a word and the amount it has appeared in the input string */
 
         /* 
          * Default constructor for the FileRequestModel class. 
@@ -39,13 +39,14 @@ namespace WordCountWebService.Models {
          */
 
        private void parseRequestString(string inputString) {
+
             this.whitespaceCount = inputString.Count(char.IsWhiteSpace);
             this.punctuationCount = inputString.Count(char.IsPunctuation);
             this.characterCount = inputString.Length - Regex.Matches(inputString, @"\t|\n|\r").Count;
-            inputString = Regex.Replace(inputString, @"\t|\n|\r", " "); // Remove newline characters and replace with spaces
+            inputString = Regex.Replace(inputString, @"\t|\n|\r", ""); // Remove newline characters
             inputString = Regex.Replace(inputString, @"\p{P}", " "); // Remove punctuation
 
-            string[] words = inputString.Split(' ');
+            string[] words = Regex.Split(inputString, @"\s+");
             this.wordCount = words.Length;
 
             for(int i = 0; i < words.Length; i++) {
@@ -56,10 +57,16 @@ namespace WordCountWebService.Models {
                     this.dict[word] += 1;
             }
 
+            // Sort the words and word count dictionary in descending order
+            
+            this.dict = this.dict.OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.Value);
+            this.dict = this.dict.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            
+
             // Extracts the top 50 results if there were more than 50 unique words in the input string
 
-            if(dict.Count > 50)
-                this.dict = new SortedDictionary<String, int>((from entry in dict orderby entry.Value descending select entry).Take(50).ToDictionary(pair => pair.Key, pair => pair.Value));
+            if (dict.Count > 50)
+                this.dict = this.dict.Take(50).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         public dynamic getFileCountJSONResponse() {
